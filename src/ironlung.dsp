@@ -172,7 +172,6 @@ tonef(x) = x + (g_tn - 1.0)*hp_tn(x);
 lvl_gain = (atap(aa.clip(0.0, 1.0, level/10.0))*R_LVL)/(R36_LVL + R_LVL);
 
 // VCA variant: 0 = 1986 uPC1252H2, 1 = later THAT 2150/2159.
-vr_vca  = select2(vca > 0.5, VR_VCA_DBX, VR_VCA_THAT);
 g_trim  = select2(vca > 0.5, 0.0, 2.0);        // +2 dB (wider 2181 range)
 
 // ====================================================================
