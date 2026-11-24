@@ -1,0 +1,24 @@
+<div class="mod-pedal il-pedal">
+    <div mod-role="drag-handle" class="mod-drag-handle"></div>
+    <div class="il-knob il-level" mod-role="input-control-port" mod-port-symbol="level" mod-widget="film"></div>
+    <div class="il-knob il-tone" mod-role="input-control-port" mod-port-symbol="tone" mod-widget="film"></div>
+    <div class="il-knob il-attack" mod-role="input-control-port" mod-port-symbol="attack" mod-widget="film"></div>
+    <div class="il-knob il-sustain" mod-role="input-control-port" mod-port-symbol="sustain" mod-widget="film"></div>
+    <div class="il-switch" mod-role="input-control-port" mod-port-symbol="vca" mod-widget="film"></div>
+    <div class="il-led mod-light" mod-role="bypass-light"></div>
+    <div class="il-foot mod-footswitch" mod-role="bypass"></div>
+    <div class="mod-pedal-input">
+        {{#effect.ports.audio.input}}
+        <div class="mod-input mod-input-disconnected" title="{{name}}" mod-role="input-audio-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-input-image"></div>
+        </div>
+        {{/effect.ports.audio.input}}
+    </div>
+    <div class="mod-pedal-output">
+        {{#effect.ports.audio.output}}
+        <div class="mod-output mod-output-disconnected" title="{{name}}" mod-role="output-audio-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-output-image"></div>
+        </div>
+        {{/effect.ports.audio.output}}
+    </div>
+</div>
