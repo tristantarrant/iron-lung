@@ -5,7 +5,7 @@
 #
 # Targets:
 #   make               build all formats into bin/
-#   make NOUI=true     DSP only (headless build hosts, e.g. Stom-Pi)
+#   make NOUI=true     DSP only (build hosts without cairo/X11)
 #   make install       install the LV2 bundle into $(INSTALL_DIR)
 #   make install-all   also VST3 and CLAP into $(VST3_DIR) / $(CLAP_DIR)
 #   make test          LV2 C-API test harness (DSP behaviour)

@@ -3,7 +3,7 @@
  *
  * Shared by the scalable plugin UI (UIIronLung.cpp) and by the modgui
  * renderer (tools/render_modgui.cpp), so the desktop GUI and the
- * Stom-Pi web pedal look the same. Everything is drawn in a fixed design
+ * modgui look the same. Everything is drawn in a fixed design
  * space of W x H units; callers scale the cairo context.
  *
  * The layout recalls the 1986 compact compressor: blue die-cast
