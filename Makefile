@@ -60,8 +60,10 @@ ttl: plugin $(TTL_GEN)
 	EXE_WRAPPER="$(EXE_WRAPPER)" dpf/utils/generate-ttl.sh bin
 	# DPF prefixes audio port symbols with "lv2_"; restore the plugin's
 	# original "in"/"out" (pedalboards store connections by symbol)
-	sed -i -e 's/lv2:symbol "lv2_in"/lv2:symbol "in"/' \
-	       -e 's/lv2:symbol "lv2_out"/lv2:symbol "out"/' $(BUNDLE)/$(PLUG)_dsp.ttl
+	# -i.bak works with both GNU sed (Linux) and BSD sed (macOS)
+	sed -i.bak -e 's/lv2:symbol "lv2_in"/lv2:symbol "in"/' \
+	           -e 's/lv2:symbol "lv2_out"/lv2:symbol "out"/' $(BUNDLE)/$(PLUG)_dsp.ttl
+	rm -f $(BUNDLE)/$(PLUG)_dsp.ttl.bak
 	rm -rf $(BUNDLE)/modgui
 	cp -r modgui $(BUNDLE)/modgui
 	mv $(BUNDLE)/modgui/modgui.ttl $(BUNDLE)/modgui.ttl
