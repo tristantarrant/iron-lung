@@ -106,6 +106,8 @@ Wayland UI type). The modgui is generated from the same artwork by
 `tools/render_modgui.cpp` (film strips at 2×, layout snapped to whole CSS
 pixels) and is shipped inside the bundle.
 
+House rule: **pedal-face UIs use cairo** (CPU raster, no OpenGL), so the desktop UI, the modgui and the screenshots come from the same drawing code.
+
 ## Building
 
 ```bash
