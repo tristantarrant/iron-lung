@@ -73,6 +73,13 @@ compressed less than treble — a signature of the original.
 Program 0 equals the parameter defaults. Sources are listed; **no artist
 settings for this pedal are published**, so none are invented here.
 
+The table is data: `presets/ironlung.json` is the source of truth (names,
+values, source metadata). `make presets` regenerates the checked-in
+`plugins/IronLung/Presets.hpp`; the DPF wrapper exposes those entries as
+programs, which DPF exports to LV2 `manifest.ttl`/`presets.ttl` and to
+VST3/CLAP. Adding or editing a preset means editing the JSON and running
+`make presets` — no C++ changes.
+
 | Program | LEVEL | TONE | ATTACK | SUSTAIN | VCA | Source |
 |---|---|---|---|---|---|---|
 | Noon — default | 5.0 | 5.0 | 5.0 | 5.0 | 1986 | — |

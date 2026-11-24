@@ -18,29 +18,16 @@
 #include "../../src/ironlung.h"
 #include "../../src/ironlung.cc"
 
+// Preset table and parameter defaults, generated from presets/ironlung.json
+#include "Presets.hpp"
+
 START_NAMESPACE_DISTRHO
 
 // --------------------------------------------------------------------
-// Presets: documented settings (see README). Program 0 equals the
-// parameter defaults.
-
-struct IlProgram {
-    const char* name;
-    float level, tone, attack, sustain;
-    float vca;        // 0 = 1986 VCA, 1 = later VCA
-};
-
-static const IlProgram kPrograms[] = {
-    { "Noon - default",                                              5.0f, 5.0f, 5.0f, 5.0f, 0.0f },
-    { "Manual - as a compressor (LEVEL 10:00, TONE 1:30, ATTACK 11:00)", 3.0f, 6.6f, 4.0f, 4.6f, 0.0f },
-    { "Manual - as a limiter (SUSTAIN 10:00)",                       3.0f, 6.6f, 4.0f, 3.0f, 0.0f },
-    { "Always-on, subtle (BOSS article: attack/sustain at 12)",      5.0f, 6.0f, 5.0f, 5.0f, 0.0f },
-    { "Clean and open (reviewer: sustain 9:00, tone 1:00)",          5.0f, 6.0f, 5.0f, 2.0f, 0.0f },
-    { "Country snap (pick attack forward)",                          6.0f, 7.0f, 8.0f, 5.0f, 0.0f },
-    { "Squashed funk (fast attack, high sustain)",                   7.0f, 8.0f, 2.0f, 8.0f, 0.0f },
-    { "Infinite sustain lead (later VCA)",                           6.0f, 5.0f, 6.0f, 9.0f, 1.0f },
-};
-static constexpr uint32_t kProgramCount = sizeof(kPrograms) / sizeof(kPrograms[0]);
+// Presets come from presets/ironlung.json via Presets.hpp (make presets).
+// DPF exports them to LV2 manifest/presets.ttl and to VST3/CLAP.
+static_assert(preset_data::kParamCount == static_cast<unsigned>(kParamBypass),
+              "presets/ironlung.json parameter list does not match DistrhoPluginInfo.h");
 
 // --------------------------------------------------------------------
 
@@ -48,13 +35,12 @@ class PluginIronLung : public Plugin
 {
 public:
     PluginIronLung()
-        : Plugin(kParamCount, kProgramCount, 0),
+        : Plugin(kParamCount, preset_data::kCount, 0),
           fDsp(ironlung::plugin())
     {
         for (uint32_t i = 0; i < kParamBypass; ++i)
-            fParams[i] = 0.0f;
+            fParams[i] = preset_data::kDefaults.value[i];
         fParams[kParamBypass] = 0.0f;
-        setProgramValues(0);
 
         for (uint32_t i = 0; i < kParamBypass; ++i)
             fDsp->connect_ports(i, &fParams[i], fDsp);
@@ -109,25 +95,25 @@ protected:
         {
         case kParamLevel:
             p.name = "LEVEL"; p.symbol = "level";
-            p.ranges.def = kPrograms[0].level;
+            p.ranges.def = preset_data::kDefaults.value[kParamLevel];
             break;
         case kParamTone:
             p.name = "TONE"; p.symbol = "tone";
-            p.ranges.def = kPrograms[0].tone;
+            p.ranges.def = preset_data::kDefaults.value[kParamTone];
             break;
         case kParamAttack:
             p.name = "ATTACK"; p.symbol = "attack";
-            p.ranges.def = kPrograms[0].attack;
+            p.ranges.def = preset_data::kDefaults.value[kParamAttack];
             break;
         case kParamSustain:
             p.name = "SUSTAIN"; p.symbol = "sustain";
-            p.ranges.def = kPrograms[0].sustain;
+            p.ranges.def = preset_data::kDefaults.value[kParamSustain];
             break;
         case kParamVca:
             p.hints |= kParameterIsInteger;
             p.name = "VCA"; p.symbol = "vca";
             p.ranges.max = 1.0f;
-            p.ranges.def = 0.0f;
+            p.ranges.def = preset_data::kDefaults.value[kParamVca];
             setEnum(p, { "1986", "later" });
             break;
         case kParamBypass:
@@ -138,14 +124,16 @@ protected:
 
     void initProgramName(const uint32_t index, String& name) override
     {
-        if (index < kProgramCount)
-            name = kPrograms[index].name;
+        if (index < preset_data::kCount)
+            name = preset_data::kEntries[index].name;
     }
 
     void loadProgram(const uint32_t index) override
     {
-        if (index < kProgramCount)
-            setProgramValues(index);
+        if (index >= preset_data::kCount)
+            return;
+        for (uint32_t i = 0; i < kParamBypass; ++i)
+            fParams[i] = preset_data::kEntries[index].value[i];
     }
 
     float getParameterValue(const uint32_t index) const override
@@ -224,15 +212,6 @@ private:
     std::vector<float> fDry;
     float fWet = 1.0f;
     float fFadeStep = 0.002f;
-
-    void setProgramValues(const uint32_t index)
-    {
-        fParams[kParamLevel]   = kPrograms[index].level;
-        fParams[kParamTone]    = kPrograms[index].tone;
-        fParams[kParamAttack]  = kPrograms[index].attack;
-        fParams[kParamSustain] = kPrograms[index].sustain;
-        fParams[kParamVca]     = kPrograms[index].vca;
-    }
 
     static void setEnum(Parameter& p, std::initializer_list<const char*> labels)
     {

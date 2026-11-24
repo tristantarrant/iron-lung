@@ -1,0 +1,60 @@
+{
+  "$comment": "Source of truth for the Iron Lung presets. Edit this file and run 'make presets' to regenerate plugins/IronLung/Presets.hpp (DPF programs, exported to LV2 presets.ttl/manifest.ttl and to VST3/CLAP). The parameter order below must match the Parameters enum in DistrhoPluginInfo.h (level, tone, attack, sustain, vca); program 0 must equal 'defaults'.",
+  "parameters": ["level", "tone", "attack", "sustain", "vca"],
+  "integers": ["vca"],
+  "ranges": {
+    "level":   [0.0, 10.0],
+    "tone":    [0.0, 10.0],
+    "attack":  [0.0, 10.0],
+    "sustain": [0.0, 10.0],
+    "vca":     [0.0, 1.0]
+  },
+  "defaults": {
+    "level": 5.0,
+    "tone": 5.0,
+    "attack": 5.0,
+    "sustain": 5.0,
+    "vca": 0.0
+  },
+  "presets": [
+    {
+      "name": "Noon - default",
+      "values": { "level": 5.0, "tone": 5.0, "attack": 5.0, "sustain": 5.0, "vca": 0.0 }
+    },
+    {
+      "name": "Manual - as a compressor (LEVEL 10:00, TONE 1:30, ATTACK 11:00)",
+      "values": { "level": 3.0, "tone": 6.6, "attack": 4.0, "sustain": 4.6, "vca": 0.0 },
+      "source": "BOSS owner's manual knob diagrams"
+    },
+    {
+      "name": "Manual - as a limiter (SUSTAIN 10:00)",
+      "values": { "level": 3.0, "tone": 6.6, "attack": 4.0, "sustain": 3.0, "vca": 0.0 },
+      "source": "BOSS owner's manual, as a limiter"
+    },
+    {
+      "name": "Always-on, subtle (BOSS article: attack/sustain at 12)",
+      "values": { "level": 5.0, "tone": 6.0, "attack": 5.0, "sustain": 5.0, "vca": 0.0 },
+      "source": "BOSS Pedal Partners article: attack and sustain at 12 o'clock"
+    },
+    {
+      "name": "Clean and open (reviewer: sustain 9:00, tone 1:00)",
+      "values": { "level": 5.0, "tone": 6.0, "attack": 5.0, "sustain": 2.0, "vca": 0.0 },
+      "source": "Ovnilab review: sustain near minimum, tone flat near 1:00"
+    },
+    {
+      "name": "Country snap (pick attack forward)",
+      "values": { "level": 6.0, "tone": 7.0, "attack": 8.0, "sustain": 5.0, "vca": 0.0 },
+      "source": "Guitar Chalk setting guide (a guide's suggestion, not an artist's)"
+    },
+    {
+      "name": "Squashed funk (fast attack, high sustain)",
+      "values": { "level": 7.0, "tone": 8.0, "attack": 2.0, "sustain": 8.0, "vca": 0.0 },
+      "source": "Guitar Chalk setting guide"
+    },
+    {
+      "name": "Infinite sustain lead (later VCA)",
+      "values": { "level": 6.0, "tone": 5.0, "attack": 6.0, "sustain": 9.0, "vca": 1.0 },
+      "source": "Guitar Chalk setting guide + the later VCA"
+    }
+  ]
+}
