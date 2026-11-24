@@ -12,7 +12,7 @@ rectifier driving the 4.7 µF control capacitor.
 
 The DSP is written in [Faust](https://faust.grame.fr) and built with
 [DPF](https://github.com/DISTRHO/DPF); the scalable cairo GUI and the
-Stom-Pi modgui are rendered from the same artwork. Everything is our own
+modgui are rendered from the same artwork. Everything is our own
 work: the pedal is only named in the documentation as the emulated circuit.
 
 ## Controls
@@ -181,7 +181,7 @@ src/il_glue.h           minimal faust/dsp2cc LV2 glue
 plugins/IronLung/       DPF plugin, cairo UI, artwork, baked wordmarks
 tests/                  LV2/CLAP/UI/modgui harnesses
 tools/                  modgui renderer and wordmark baker
-modgui/                 generated Stom-Pi pedal UI
+modgui/                 generated modgui (pedal UI)
 ```
 
 ## Sources
