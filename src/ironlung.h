@@ -3,7 +3,6 @@
 #ifndef IL_IRONLUNG_H
 #define IL_IRONLUNG_H
 
-#include <lv2.h>
 
 #define ILPLUGIN_URI "http://dataforte.net/plugins/ironlung"
 
