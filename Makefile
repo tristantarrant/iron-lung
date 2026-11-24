@@ -41,6 +41,10 @@ TTL_GEN := dpf/utils/lv2_ttl_generator
 
 all: ttl
 
+# queried by the CI action before building
+features:
+	@echo "features: LV2 (DSP+UI+modgui), VST3, CLAP, JACK standalone"
+
 dpf/Makefile.plugins.mk:
 	git submodule update --init --recursive
 
@@ -53,7 +57,7 @@ plugin: dpf/Makefile.plugins.mk
 # generate the LV2 TTL (incl. presets.ttl from the plugin programs) and
 # add the static modgui
 ttl: plugin $(TTL_GEN)
-	cd $(BUNDLE) && $(CURDIR)/$(TTL_GEN) ./$(PLUG)_dsp.so
+	EXE_WRAPPER="$(EXE_WRAPPER)" dpf/utils/generate-ttl.sh bin
 	# DPF prefixes audio port symbols with "lv2_"; restore the plugin's
 	# original "in"/"out" (pedalboards store connections by symbol)
 	sed -i -e 's/lv2:symbol "lv2_in"/lv2:symbol "in"/' \
